@@ -26,24 +26,25 @@ class ProductController extends Controller
         $product = Product::create($validated);
 
         return redirect()
-                ->route('products.show', [$product]) // vai ['product' => $product]
+                ->route('products/show', [$product]) // vai ['product' => $product]
                 ->with('message', "Product created successfully");
     }
 
     public function show(Product $product) {
-        return view('products.show', compact('product'));
+        return view('products/show', compact('product'));
     }
 
     public function destroy(Product $product) {
         $product->delete();
         return redirect()
-                ->route('products.index')
+                ->route('products/index')
                 ->with('message', "Product deleted successfully");
     }
 
-    public function edit(Product $product) {
-        return view('products.edit', compact('product'));
-    }
+    public function edit(Product $product)
+{
+    return view('products/edit', compact('product'));
+}
 
     public function update(Request $request, Product $product) {
         $validated = $request->validate([
@@ -54,7 +55,7 @@ class ProductController extends Controller
 
         $product->update($validated);
         return redirect()
-                ->route('products.show', [$product])
+                ->route('products/show', [$product])
                 ->with('message', "Product updated successfully");
     }
 
@@ -65,11 +66,11 @@ class ProductController extends Controller
 
         if ($product->decreaseQuantity($request->amount)) {
             return redirect()
-                    ->route('products.show', [$product])
+                    ->route('products/show', [$product])
                     ->with('message', "Product quantity decreased successfully");
         } else {
             return redirect()
-                    ->route('products.show', [$product])
+                    ->route('products/show', [$product])
                     ->withErrors(['amount' => 'Not enough stock to decrease quantity.']);
         }
     }
