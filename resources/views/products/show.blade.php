@@ -1,3 +1,4 @@
+
 <x-layout>
     <x-slot:title>
         Show a product
@@ -14,7 +15,15 @@
     @endif
 
     <h1>{{ $product->name }}</h1>
-    <h4>Quantity: {{ $product->quantity }}</h4>
+
+    <h4>
+        Quantity:
+        <span id="quantity">{{ $product->quantity }}</span>
+    </h4>
+
+    <button type="button" id="increase">+</button>
+    <button type="button" id="decrease">-</button>
+
     <p>{{ $product->description }}</p>
 
     <form action="{{ route('products/update', $product) }}" method="post" class="tag-form" data-search-url="{{ route('tag/search') }}">
@@ -40,6 +49,7 @@
     </form>
 
     <a href="{{ route('products/edit', $product) }}">Edit</a>
+
     <form action="{{ route('products/destroy', $product) }}" method="post">
         @csrf
         @method('DELETE')
