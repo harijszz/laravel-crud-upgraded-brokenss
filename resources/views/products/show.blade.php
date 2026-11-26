@@ -26,6 +26,22 @@
 
     <p>{{ $product->description }}</p>
 
+    <fieldset>
+        <legend>Choose your tags</legend>
+        <div>
+            <input type="checkbox" name="tag" value="food" />
+            <label for="food">Food</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="tech" />
+            <label for="tech">Tech</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="clothes" />
+            <label for="clothes">Clothing</label>
+        </div>
+    </fieldset>
+
     <form action="{{ route('products/update', $product) }}" method="post" class="tag-form" data-search-url="{{ route('tag/search') }}">
         @csrf
         @method('PUT')
@@ -55,4 +71,45 @@
         @method('DELETE')
         <input type="submit" value="Delete">
     </form>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantity = document.getElementById('quantity');
+            const url = "{{ route('products.updateQuantity', $product) }}";
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+
+            async function updateQuantity(action) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ action: action })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('HTTP error: ' + response.status);
+                    }
+
+                    const data = await response.json();
+                    quantity.textContent = data.quantity;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            document.getElementById('increase').addEventListener('click', function () {
+                updateQuantity('increase');
+            });
+
+            document.getElementById('decrease').addEventListener('click', function () {
+                updateQuantity('decrease');
+            });
+        });
+    </script>
 </x-layout>
