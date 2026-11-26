@@ -17,6 +17,21 @@
     <h4>Quantity: {{ $product->quantity }}</h4>
     <p>{{ $product->description }}</p>
 
+    <fieldset>
+        <legend>Choose your tags</legend>
+        <div>
+            <input type="checkbox" name="tag" value="food" />
+            <label for="food">Food</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="tech" />
+            <label for="tech">Tech</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="clothes" />
+            <label for="clothes">Clothing</label>
+        </div>
+    </fieldset> 
     <a href="{{ route('products/edit', $product) }}">Edit</a>
     <form action="{{ route('products/destroy', $product) }}" method="post">
         @csrf
