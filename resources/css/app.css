@@ -173,6 +173,57 @@ form input[type="submit"]:hover {
     padding-left: 20px;
 }
 
+/* Tags */
+.tag-form {
+    max-width: 480px;
+}
+
+.tag-suggestions {
+    list-style: none;
+    margin: -10px 0 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.tag-suggestion {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.tag-suggestion:hover,
+.tag-suggestion.is-active {
+    background-color: #e5e7eb;
+}
+
+.tag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 16px;
+    background-color: #dbeafe;
+}
+
+.tag-remove {
+    border: none;
+    background: transparent;
+    color: #333;
+    font-size: 1.2em;
+    line-height: 1;
+    cursor: pointer;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
