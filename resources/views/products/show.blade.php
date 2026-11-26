@@ -26,6 +26,28 @@
 
     <p>{{ $product->description }}</p>
 
+    <form action="{{ route('products/update', $product) }}" method="post" class="tag-form" data-search-url="{{ route('tag/search') }}">
+        @csrf
+        @method('PUT')
+
+        <label for="tag-search">Tags</label>
+        <input type="text" id="tag-search" autocomplete="off" placeholder="Search or type a tag">
+
+        <ul id="tag-suggestions" class="tag-suggestions" hidden></ul>
+
+        <ul id="selected-tags" class="tag-list">
+            @foreach (old('tags', $product->tags->pluck('title')->all()) as $tagTitle)
+                <li class="tag-item">
+                    <span>{{ $tagTitle }}</span>
+                    <input type="hidden" name="tags[]" value="{{ $tagTitle }}">
+                    <button type="button" class="tag-remove" aria-label="Remove tag">&times;</button>
+                </li>
+            @endforeach
+        </ul>
+
+        <input type="submit" value="Update">
+    </form>
+
     <a href="{{ route('products/edit', $product) }}">Edit</a>
 
     <form action="{{ route('products/destroy', $product) }}" method="post">
@@ -33,51 +55,4 @@
         @method('DELETE')
         <input type="submit" value="Delete">
     </form>
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    document.getElementById('increase').addEventListener('click', function () {
-        updateQuantity('increase');
-    });
-
-    document.getElementById('decrease').addEventListener('click', function () {
-        updateQuantity('decrease');
-    });
-
-    function updateQuantity(action) {
-
-        console.log('Button clicked:', action);
-
-        fetch("{{ route('products.updateQuantity', $product) }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                action: action
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('HTTP error: ' + response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            document.getElementById('quantity').textContent = data.quantity;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    }
-
-});
-</script>
-
 </x-layout>
