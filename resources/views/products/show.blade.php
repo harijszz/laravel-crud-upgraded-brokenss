@@ -26,6 +26,26 @@
 
     <p>{{ $product->description }}</p>
 
+//<<<<<<< feature/matiss_tags
+    <fieldset>
+        <legend>Choose your tags</legend>
+        <div>
+            <input type="checkbox" name="tag" value="food" />
+            <label for="food">Food</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="tech" />
+            <label for="tech">Tech</label>
+        </div>
+        <div>
+            <input type="checkbox" name="tag" value="clothes" />
+            <label for="clothes">Clothing</label>
+        </div>
+    </fieldset> 
+//<<<<<<<matiss
+
+
+
     <form action="{{ route('products/update', $product) }}" method="post" class="tag-form" data-search-url="{{ route('tag/search') }}">
         @csrf
         @method('PUT')
