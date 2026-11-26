@@ -41,7 +41,7 @@
             <label for="clothes">Clothing</label>
         </div>
     </fieldset>
-
+    
     <form action="{{ route('products/update', $product) }}" method="post" class="tag-form" data-search-url="{{ route('tag/search') }}">
         @csrf
         @method('PUT')
